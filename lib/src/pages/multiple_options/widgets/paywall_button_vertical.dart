@@ -1,24 +1,37 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class PaywallButtonWidget extends StatelessWidget {
+import '../../../controllers/paywall.dart';
+import '../../../types/paywall_offers.dart';
+
+class PaywallButtonVerticalWidget extends StatelessWidget {
   final bool isSelected;
-  const PaywallButtonWidget({Key? key, this.isSelected = false}) : super(key: key);
+  final PaywallButtonOffer offer;
+  PaywallButtonVerticalWidget({Key? key, this.isSelected = false, required this.offer}) : super(key: key);
+  final controller = Get.find<PaywallController>();
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
+        TextButton(
+          onPressed: () => controller.baseFunction(offer.onPressed),
+          style: offer.buttonStyle ??
+              TextButton.styleFrom(
+                primary: offer.bgMainContainerColor ?? Colors.orange,
+                padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
           child: Container(
-            height: 60,
+            height: 65,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: Colors.black,
               border: isSelected
                   ? Border.all(
-                      color: Colors.deepOrangeAccent,
+                      color: offer.bgMainContainerColor ?? Colors.deepOrangeAccent,
                       width: 2,
                     )
                   : null,
@@ -33,16 +46,19 @@ class PaywallButtonWidget extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Flexible(
                         child: Text(
-                          '3-Day Trial',
+                          offer.title,
                           style: Get.textTheme.bodyMedium!.copyWith(
-                            color: isSelected ? Colors.white : Colors.grey,
-                            fontSize: 18,
+                            color: isSelected ? offer.titleColor ?? Colors.white : offer.textInactiveColor ?? Colors.grey,
+                            fontSize: offer.titleSize ?? 18,
                             fontWeight: FontWeight.bold,
                           ),
                           maxLines: 1,
@@ -52,9 +68,10 @@ class PaywallButtonWidget extends StatelessWidget {
                       const SizedBox(height: 4),
                       Expanded(
                         child: Text(
-                          'After trial ends \$4.99 per month',
+                          offer.subtitle,
                           style: Get.textTheme.bodyMedium!.copyWith(
-                            color: Colors.grey,
+                            color: isSelected ? offer.subtitleColor ?? Colors.grey : offer.textInactiveColor ?? Colors.grey,
+                            fontSize: offer.subtitleSize ?? 12,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -66,10 +83,10 @@ class PaywallButtonWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "FREE",
+                      offer.price,
                       style: Get.textTheme.bodyMedium!.copyWith(
-                        color: isSelected ? Colors.white : Colors.grey,
-                        fontSize: 18,
+                        color: isSelected ? offer.priceColor ?? Colors.white : offer.textInactiveColor ?? Colors.grey,
+                        fontSize: offer.priceSize ?? 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -80,28 +97,18 @@ class PaywallButtonWidget extends StatelessWidget {
           ),
         ),
         isSelected
-            ? const Padding(
-                padding: EdgeInsets.all(6.0),
+            ? Padding(
+                padding: const EdgeInsets.all(6.0),
                 child: Align(
                   alignment: Alignment.topRight,
                   child: Icon(
                     Icons.check_circle,
-                    color: Colors.green,
+                    color: offer.checkIconColorActive ?? Colors.green,
                     size: 18,
                   ),
                 ),
               )
-            : const Padding(
-                padding: EdgeInsets.all(6.0),
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: Icon(
-                    Icons.circle_outlined,
-                    color: Colors.grey,
-                    size: 18,
-                  ),
-                ),
-              ),
+            : Container()
       ],
     );
   }

@@ -33,11 +33,11 @@ class OneTimePaymentPage extends GetView {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: paywallStyle?.scaffoldBackground ?? Colors.black,
-      body: SafeArea(
-        top: false,
-        child: Stack(
-          children: [
-            SingleChildScrollView(
+      body: Stack(
+        children: [
+          SafeArea(
+            top: false,
+            child: SingleChildScrollView(
               child: Container(
                 decoration: mainContainerDecoration ??
                     BoxDecoration(
@@ -217,46 +217,46 @@ class OneTimePaymentPage extends GetView {
                 ),
               ),
             ),
-            SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Visibility(
-                  visible: paywallSettings.enabledBackButton, //() => paywallController.baseFunction(paywallSettings.onPressedPrivacyButton),
-                  child: SizedBox(
-                    height: 30,
-                    width: double.maxFinite,
-                    child: Row(
-                      children: [
-                        const Spacer(),
-                        Container(
-                          width: 30,
-                          decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          child: CupertinoButton(
-                            padding: const EdgeInsets.all(0),
-                            child: const Icon(
-                              Icons.close,
-                              color: Colors.black45,
-                            ),
-                            onPressed: () => Get.back(),
-                          ),
+          ),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Visibility(
+                visible: paywallSettings.enabledBackButton, //() => paywallController.baseFunction(paywallSettings.onPressedPrivacyButton),
+                child: SizedBox(
+                  height: 30,
+                  width: double.maxFinite,
+                  child: Row(
+                    children: [
+                      const Spacer(),
+                      Container(
+                        width: 30,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(100),
                         ),
-                      ],
-                    ),
+                        child: CupertinoButton(
+                          padding: const EdgeInsets.all(0),
+                          child: const Icon(
+                            Icons.close,
+                            color: Colors.black45,
+                          ),
+                          onPressed: () => Get.back(),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
-            Obx(
-              () => Visibility(
-                visible: paywallController.loading,
-                child: const PreloaderWidget(),
-              ),
+          ),
+          Obx(
+            () => Visibility(
+              visible: paywallController.loading,
+              child: const PreloaderWidget(),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

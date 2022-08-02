@@ -5,8 +5,11 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:paywall_ui/paywall_ui.dart';
 import 'package:paywall_ui/src/controllers/paywall.dart';
-import 'package:paywall_ui/src/pages/multiple_options/widgets/paywall_button.dart';
+import 'package:paywall_ui/src/pages/multiple_options/widgets/paywall_button_vertical.dart';
+import 'package:paywall_ui/src/utils/enum.dart';
 import 'package:paywall_ui/src/widgets/preloader.dart';
+
+import 'widgets/paywall_button_horizontal.dart';
 
 class MultipleOptionsPage extends GetView {
   /// paywall based on adatpy.io concept
@@ -16,29 +19,67 @@ class MultipleOptionsPage extends GetView {
   final BoxDecoration? mainContainerDecoration; // main container decoration
   final PaywallSettings paywallSettings; // paywall settings
   final MultiplePaywallStyle? paywallStyle;
+  final int currentOfferSelected; // current item selected
   final List<String> features;
+  final List<PaywallButtonOffer> offers;
+  final LayoutMultiple optionsLayout;
+  final int offerRecommended;
 
   MultipleOptionsPage({
     Key? key,
     required this.mediaContainer,
     required this.features,
     required this.paywallSettings,
-    this.mainContainerDecoration,
-    this.paywallStyle,
-  }) : super(key: key);
-
-  @override
+    required this.offers,
+    required this.currentOfferSelected,
+    required this.mainContainerDecoration,
+    required this.paywallStyle,
+    required this.optionsLayout,
+    required this.offerRecommended,
+  })  : assert(currentOfferSelected <= offers.length - 1, 'offers must be greater than offers.length'),
+        assert(offers.length > 1, 'offers must be greater than 1'),
+        super(key: key);
   final paywallController = Get.put<PaywallController>(PaywallController());
+
+  // list of offers
+  Widget listView() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: optionsLayout == LayoutMultiple.horizontal
+          ? Row(
+              children: [
+                for (int i = 0; i < offers.length; i++)
+                  PaywallButtonHorizontalWidget(
+                    isSelected: currentOfferSelected == i,
+                    offer: offers[i],
+                    isRecommended: offerRecommended == (i + 1),
+                  ),
+              ],
+            )
+          : ListView(
+              padding: const EdgeInsets.only(top: 16.0),
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                for (int i = 0; i < offers.length; i++)
+                  PaywallButtonVerticalWidget(
+                    isSelected: currentOfferSelected == i,
+                    offer: offers[i],
+                  ),
+              ],
+            ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: paywallStyle?.scaffoldBackground ?? const Color(0xFF1E1E1E),
-      body: SafeArea(
-        top: false,
-        child: Stack(
-          children: [
-            SingleChildScrollView(
+      backgroundColor: paywallStyle?.scaffoldBackground ?? HexColor("#1E1E1E"),
+      body: Stack(
+        children: [
+          SafeArea(
+            top: false,
+            child: SingleChildScrollView(
               child: Container(
                 decoration: mainContainerDecoration ??
                     BoxDecoration(
@@ -47,9 +88,9 @@ class MultipleOptionsPage extends GetView {
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              paywallStyle?.linearGradientColor ?? const Color(0xFF1E1E1E),
-                              const Color(0xFF1E1E1E),
-                              const Color(0xFF1E1E1E),
+                              paywallStyle?.linearGradientColor ?? HexColor("#1E1E1E"),
+                              HexColor("#1E1E1E"),
+                              HexColor("#1E1E1E"),
                             ],
                           ),
                     ),
@@ -67,7 +108,7 @@ class MultipleOptionsPage extends GetView {
                             child: const Center(
                               child: Icon(
                                 Iconsax.crown_14,
-                                size: 100,
+                                size: 150,
                                 color: Colors.yellow,
                               ),
                             ),
@@ -93,7 +134,7 @@ class MultipleOptionsPage extends GetView {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(
-                      height: 12,
+                      height: 16,
                     ),
                     Column(
                       mainAxisSize: MainAxisSize.min,
@@ -113,18 +154,14 @@ class MultipleOptionsPage extends GetView {
                           ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: ListView(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        children: const [
-                          PaywallButtonWidget(),
-                          PaywallButtonWidget(
-                            isSelected: true,
-                          ),
-                          PaywallButtonWidget(),
-                        ],
+                    listView(),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                      offers[currentOfferSelected].description ?? "",
+                      style: Get.textTheme.bodyText1!.copyWith(
+                        color: Colors.white,
                       ),
                     ),
                     const SizedBox(
@@ -213,46 +250,46 @@ class MultipleOptionsPage extends GetView {
                 ),
               ),
             ),
-            SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Visibility(
-                  visible: paywallSettings.enabledBackButton, //() => paywallController.baseFunction(paywallSettings.onPressedPrivacyButton),
-                  child: SizedBox(
-                    height: 30,
-                    width: double.maxFinite,
-                    child: Row(
-                      children: [
-                        const Spacer(),
-                        Container(
-                          width: 30,
-                          decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          child: CupertinoButton(
-                            padding: const EdgeInsets.all(0),
-                            child: const Icon(
-                              Icons.close,
-                              color: Colors.black45,
-                            ),
-                            onPressed: () => Get.back(),
-                          ),
+          ),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Visibility(
+                visible: paywallSettings.enabledBackButton, //() => paywallController.baseFunction(paywallSettings.onPressedPrivacyButton),
+                child: SizedBox(
+                  height: 30,
+                  width: double.maxFinite,
+                  child: Row(
+                    children: [
+                      const Spacer(),
+                      Container(
+                        width: 30,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(100),
                         ),
-                      ],
-                    ),
+                        child: CupertinoButton(
+                          padding: const EdgeInsets.all(0),
+                          child: const Icon(
+                            Icons.close,
+                            color: Colors.black45,
+                          ),
+                          onPressed: () => Get.back(),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
-            Obx(
-              () => Visibility(
-                visible: paywallController.loading,
-                child: const PreloaderWidget(),
-              ),
+          ),
+          Obx(
+            () => Visibility(
+              visible: paywallController.loading,
+              child: const PreloaderWidget(),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
