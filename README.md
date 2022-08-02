@@ -11,30 +11,48 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+This package was created to facilitate the development of new paywalls
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+Currently the plugin has only 2 layouts.
+    - OTP for an OTP preferred payment option.
+    - Multiple Options, ideal for 2 or 3 subscription offers or OTP Subscription.
+    -- Multiple Options has vertical layout (default) and horizontal layout.
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Requisitos padrões
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+Include short and useful examples for package users.
+
+on example path: ``lib/app/modules/paywall/view.dart``
 
 ```dart
-const like = 'sample';
+    Container(
+        child: PaywallUi().oneTimePayment(
+            features: ['🔓 feature1', '⌚️ feature2'],
+            paywallStyle: OTPPaywallStyle(
+                featuresSize: 18,
+            ),
+            paywallSettings: PaywallSettings(
+                localizedPrice: "\$ 4.99",
+                onPressedBackButton: () => Get.back(),
+                onPressedPurchaseButton: () async {
+                    /// to make purchase on cta
+                    /// call.purchase(product);
+                    await Future.delayed(const Duration(seconds: 3));
+                },
+                onPressedRestoreButton: () async => await Future.delayed(const Duration(seconds: 3)),
+                onPressedPrivacyButton: () => Get.defaultDialog(title: "Privacy Policy", middleText: "Privacy Policy Link"),
+                onPressedTermsButton: () => Get.defaultDialog(title: "Terms of Use", middleText: "Terms of Use Link"),
+            ),
+        ),
+    )
 ```
 
 ## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+You can build with this package by opening a pr on github.
 # paywall_ui

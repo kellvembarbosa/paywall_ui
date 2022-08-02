@@ -1,7 +1,7 @@
 name: paywall_ui
-description: A new Flutter package project.
+description: This package was created to facilitate the development of new paywalls.
 version: 0.0.1
-homepage:
+homepage: https://github.com/kellvembarbosa/paywall_ui
 
 environment:
   sdk: ">=2.17.6 <3.0.0"
