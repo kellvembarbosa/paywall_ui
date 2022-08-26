@@ -33,6 +33,9 @@ class PaywallUi {
     int currentOfferSelected = 0,
     LayoutMultiple optionsLayout = LayoutMultiple.vertical,
     int offerRecommended = 9999,
+    String mainTitle = "Try 3 days FREE",
+    String mainSubTitle = "No commitment. Cancel anytime",
+    String textButtonCTA = "Try now",
   }) {
     return MultipleOptionsPage(
       paywallSettings: paywallSettings,
@@ -44,6 +47,9 @@ class PaywallUi {
       currentOfferSelected: currentOfferSelected,
       optionsLayout: optionsLayout,
       offerRecommended: offerRecommended,
+      mainTitle: mainTitle,
+      mainSubTitle: mainSubTitle,
+      textButtonCTA: textButtonCTA,
     );
   }
 
@@ -53,6 +59,8 @@ class PaywallUi {
     Widget? mediaContainer,
     BoxDecoration? mainContainerDecoration,
     OTPPaywallStyle? paywallStyle,
+    String mainTitle = "Unlock all watch faces for life",
+    String textButtonCTA = "Buy now",
   }) {
     return OneTimePaymentPage(
       paywallSettings: paywallSettings,
@@ -60,6 +68,8 @@ class PaywallUi {
       mainContainerDecoration: mainContainerDecoration,
       features: features,
       paywallStyle: paywallStyle,
+      mainTitle: mainTitle,
+      textButtonCTA: textButtonCTA,
     );
   }
 

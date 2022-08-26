@@ -31,10 +31,10 @@ class PaywallButtonHorizontalWidget extends StatelessWidget {
             decoration: offer.mainContainerDecoration ??
                 BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: Colors.black,
+                  color: offer.bgMainContainerColor ?? Colors.black,
                   border: isSelected
                       ? Border.all(
-                          color: offer.bgMainContainerColor ?? Colors.deepOrangeAccent,
+                          color: offer.borderColor ?? Colors.deepOrangeAccent,
                           width: 2,
                         )
                       : null,

@@ -29,8 +29,15 @@ class HomePage extends GetView<HomeController> {
               SizedBox(
                 width: Get.width,
                 child: ElevatedButton(
-                  child: const Text('Show paywall Multiple Options'),
-                  onPressed: () => Get.toNamed('/paywall', arguments: {'type': 'multiple'}),
+                  child: const Text('Show paywall Multiple Options Horizontal'),
+                  onPressed: () => Get.toNamed('/paywall', arguments: {'type': 'multiple', 'orientation': 'horizontal'}),
+                ),
+              ),
+              SizedBox(
+                width: Get.width,
+                child: ElevatedButton(
+                  child: const Text('Show paywall Multiple Options Vertical'),
+                  onPressed: () => Get.toNamed('/paywall', arguments: {'type': 'multiple', 'orientation': 'vertical'}),
                 ),
               ),
             ],

@@ -8,7 +8,9 @@ class PaywallController extends GetxController {
 
   baseFunction(Function? currentFunction) async {
     setLoading = true;
-    if (currentFunction != null) await currentFunction();
+    if (currentFunction != null) {
+      await currentFunction();
+    }
     setLoading = false;
   }
 }

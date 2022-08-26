@@ -22,9 +22,9 @@ class PaywallPage extends GetView<HomeController> {
             return Obx(
               () => paywallUi.multipleOptions(
                 currentOfferSelected: controller.currentOfferValue,
-                optionsLayout: layoutPaywall,
+                optionsLayout: arguments['orientation'] == 'horizontal' ? LayoutMultiple.horizontal : LayoutMultiple.vertical,
                 offerRecommended: 2,
-                offers: layoutPaywall == LayoutMultiple.horizontal
+                offers: arguments['orientation'] == 'horizontal'
                     ? [
                         PaywallButtonOffer(
                           title: "1",

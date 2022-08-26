@@ -24,6 +24,9 @@ class MultipleOptionsPage extends GetView {
   final List<PaywallButtonOffer> offers;
   final LayoutMultiple optionsLayout;
   final int offerRecommended;
+  final String mainTitle;
+  final String mainSubTitle;
+  final String textButtonCTA;
 
   MultipleOptionsPage({
     Key? key,
@@ -36,8 +39,17 @@ class MultipleOptionsPage extends GetView {
     required this.paywallStyle,
     required this.optionsLayout,
     required this.offerRecommended,
-  })  : assert(currentOfferSelected <= offers.length - 1, 'offers must be greater than offers.length'),
-        assert(offers.length > 1, 'offers must be greater than 1'),
+    required this.mainTitle,
+    required this.mainSubTitle,
+    required this.textButtonCTA,
+  })  : assert(
+          currentOfferSelected <= offers.length - 1,
+          'offers must be greater than offers.length',
+        ),
+        assert(
+          offers.length > 1,
+          'offers must be greater than 1',
+        ),
         super(key: key);
   final paywallController = Get.put<PaywallController>(PaywallController());
 
@@ -115,7 +127,7 @@ class MultipleOptionsPage extends GetView {
                           ),
                         ),
                     Text(
-                      "Try 3 days FREE".tr,
+                      mainTitle,
                       style: Get.textTheme.titleLarge!.copyWith(
                         color: paywallStyle?.titleColor ?? Colors.white,
                         fontWeight: FontWeight.bold,
@@ -126,7 +138,7 @@ class MultipleOptionsPage extends GetView {
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      "No commitment. Cancel anytime".tr,
+                      mainSubTitle,
                       style: Get.textTheme.subtitle1!.copyWith(
                         color: paywallStyle?.subtitleColor ?? Colors.white,
                         fontSize: paywallStyle?.subtitleSize ?? 16,
@@ -182,7 +194,7 @@ class MultipleOptionsPage extends GetView {
                             ),
                         onPressed: () => paywallController.baseFunction(paywallSettings.onPressedPurchaseButton),
                         child: Text(
-                          "Try Now".tr,
+                          textButtonCTA.tr,
                           style: paywallStyle?.textStyleButtonCTA ??
                               const TextStyle(
                                 color: Colors.white,
@@ -274,7 +286,13 @@ class MultipleOptionsPage extends GetView {
                             Icons.close,
                             color: Colors.black45,
                           ),
-                          onPressed: () => Get.back(),
+                          onPressed: () {
+                              if (paywallSettings.onPressedBackButton != null){
+                                paywallSettings.onPressedBackButton!();
+                              } else {
+                                Get.back();
+                              }
+                          },
                         ),
                       ),
                     ],

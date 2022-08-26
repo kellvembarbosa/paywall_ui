@@ -26,23 +26,24 @@ class PaywallButtonVerticalWidget extends StatelessWidget {
               ),
           child: Container(
             height: 65,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: Colors.black,
-              border: isSelected
-                  ? Border.all(
-                      color: offer.bgMainContainerColor ?? Colors.deepOrangeAccent,
-                      width: 2,
-                    )
-                  : null,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
+            decoration: offer.mainContainerDecoration ??
+                BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: offer.bgMainContainerColor ?? Colors.black,
+                  border: isSelected
+                      ? Border.all(
+                          color: offer.borderColor ?? Colors.deepOrangeAccent,
+                          width: 2,
+                        )
+                      : null,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
-              ],
-            ),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
               child: Row(

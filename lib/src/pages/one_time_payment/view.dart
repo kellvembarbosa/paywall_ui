@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:paywall_ui/paywall_ui.dart';
 import 'package:paywall_ui/src/controllers/paywall.dart';
@@ -16,6 +17,8 @@ class OneTimePaymentPage extends GetView {
   final PaywallSettings paywallSettings; // paywall settings
   final OTPPaywallStyle? paywallStyle;
   final List<String> features;
+  final String mainTitle;
+  final String textButtonCTA;
 
   OneTimePaymentPage({
     Key? key,
@@ -24,9 +27,10 @@ class OneTimePaymentPage extends GetView {
     required this.paywallSettings,
     this.mainContainerDecoration,
     this.paywallStyle,
+    required this.mainTitle,
+    required this.textButtonCTA,
   }) : super(key: key);
 
-  @override
   final paywallController = Get.put<PaywallController>(PaywallController());
 
   @override
@@ -72,16 +76,19 @@ class OneTimePaymentPage extends GetView {
                             ),
                           ),
                         ),
-                    Text(
-                      "Unlock all watch faces for life".tr,
-                      style: Get.textTheme.titleLarge!.copyWith(
-                        color: paywallStyle?.titleColor ?? Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: paywallStyle?.titleSize ?? 24,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 6.0, right: 6),
+                      child: Text(
+                        mainTitle,
+                        style: GoogleFonts.rubik(
+                          color: paywallStyle?.titleColor ?? Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: paywallStyle?.titleSize ?? 24,
+                        ),
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(
                       height: 12,
@@ -112,25 +119,53 @@ class OneTimePaymentPage extends GetView {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Only @price".trParams(
+                          "Get for @price".trParams(
                             {
-                              "price": "${paywallSettings.localizedPrice.tr} - ${paywallSettings.localizedSubscriptionPeriod.tr}",
+                              "price": "${paywallSettings.localizedPrice.tr} ${paywallSettings.localizedSubscriptionPeriod.tr}",
                             },
                           ),
-                          style: Get.textTheme.titleMedium!.copyWith(
+                          style: GoogleFonts.openSans(
                             color: paywallStyle?.featuresColor ?? Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: paywallStyle?.priceSize ?? 18,
+                            fontWeight: FontWeight.w400,
+                            fontSize: paywallStyle?.priceSize ?? 16,
                           ),
                           textAlign: TextAlign.center,
                         ),
                       ],
                     ),
                     const SizedBox(
+                      height: 2,
+                    ),
+                    paywallSettings.isSubscription
+                        ? Container()
+                        : Text(
+                            "Lifetime Access. No subscriptions.".tr,
+                            style: GoogleFonts.lato(
+                              color: paywallStyle?.featuresColor ?? Colors.white,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 12,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                    paywallSettings.isSubscription
+                        ? Container()
+                        : const SizedBox(
+                            height: 4,
+                          ),
+                    Text(
+                      "Family Sharing (Up to 6 members)".tr,
+                      style: GoogleFonts.lato(
+                        color: paywallStyle?.featuresColor ?? Colors.white,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 12,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(
                       height: 20,
                     ),
                     SlideInLeft(
-                      child: ElevatedButton.icon(
+                      child: ElevatedButton(
                         style: paywallStyle?.buttonStyle ??
                             ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12),
@@ -142,19 +177,19 @@ class OneTimePaymentPage extends GetView {
                               ),
                             ),
                         onPressed: () => paywallController.baseFunction(paywallSettings.onPressedPurchaseButton),
-                        icon: paywallStyle?.iconButtonCTA ??
-                            const Icon(
-                              Icons.arrow_circle_right_outlined,
-                              color: Colors.white,
-                              size: 36,
-                            ),
-                        label: Text(
-                          "Continue ".tr,
+                        // icon: paywallStyle?.iconButtonCTA ??
+                        //     const Icon(
+                        //       Icons.verified_user_outlined,
+                        //       color: Colors.white,
+                        //       size: 32,
+                        //     ),
+                        child: Text(
+                          textButtonCTA,
                           style: paywallStyle?.textStyleButtonCTA ??
-                              const TextStyle(
+                              GoogleFonts.rubik(
                                 color: Colors.white,
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
                               ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -162,7 +197,33 @@ class OneTimePaymentPage extends GetView {
                       ),
                     ),
                     const SizedBox(
-                      height: 24,
+                      height: 6,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.verified_user_outlined,
+                          color: Colors.white,
+                          size: 12,
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          "Protected by iTunes.".tr,
+                          style: GoogleFonts.roboto(
+                            color: paywallStyle?.featuresColor ?? Colors.white,
+                            fontWeight: FontWeight.w300,
+                            fontSize: 10,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
                     ),
                     Opacity(
                       opacity: 0.5,
@@ -180,6 +241,7 @@ class OneTimePaymentPage extends GetView {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.grey[500]!,
+                                fontSize: 12,
                               ),
                             ),
                           ),
@@ -193,6 +255,7 @@ class OneTimePaymentPage extends GetView {
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                 color: Colors.grey,
+                                fontSize: 12,
                               ),
                             ),
                           ),
@@ -206,6 +269,7 @@ class OneTimePaymentPage extends GetView {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.grey[500]!,
+                                fontSize: 12,
                               ),
                             ),
                           ),
@@ -241,7 +305,13 @@ class OneTimePaymentPage extends GetView {
                             Icons.close,
                             color: Colors.black45,
                           ),
-                          onPressed: () => Get.back(),
+                          onPressed: () {
+                            if (paywallSettings.onPressedBackButton != null) {
+                              paywallSettings.onPressedBackButton!();
+                            } else {
+                              Get.back();
+                            }
+                          },
                         ),
                       ),
                     ],
