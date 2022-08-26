@@ -126,9 +126,37 @@ class PaywallPage extends GetView<HomeController> {
                 ),
               ),
             );
+          case 'one':
+            return paywallUi.onePayment(
+              features: [
+                "Daily Gallery Updates",
+                "Live, Static, Dynamic Collections",
+                "No Ads",
+                "No Subscriptions",
+              ],
+              paywallStyle: OTPPaywallStyle(
+                featuresSize: 16,
+                priceSize: 16,
+              ),
+              mainTitle: "Unlock All Faces".tr,
+              textButtonCTA: "Unlock for lifetime".tr,
+              paywallSettings: PaywallSettings(
+                localizedPrice: "Pay once \$ 4.99 for lifetime access",
+                onPressedBackButton: () => Get.back(),
+                onPressedPurchaseButton: () async {
+                  /// to make purchase on cta
+                  /// call.purchase(product);
+                  await Future.delayed(const Duration(seconds: 3));
+                },
+                onPressedRestoreButton: () async => await Future.delayed(const Duration(seconds: 3)),
+                onPressedPrivacyButton: () => Get.defaultDialog(title: "Privacy Policy", middleText: "Privacy Policy Link"),
+                onPressedTermsButton: () => Get.defaultDialog(title: "Terms of Use", middleText: "Terms of Use Link"),
+              ),
+            );
           default:
             return paywallUi.oneTimePayment(
               features: ['🔓 feature1', '⌚️ feature2'],
+              textButtonCTA: "Unlock for lifetime".tr,
               paywallStyle: OTPPaywallStyle(
                 featuresSize: 18,
               ),
@@ -138,7 +166,9 @@ class PaywallPage extends GetView<HomeController> {
                 onPressedPurchaseButton: () async {
                   /// to make purchase on cta
                   /// call.purchase(product);
-                  await Future.delayed(const Duration(seconds: 3));
+                  await Future.delayed(
+                    const Duration(seconds: 3),
+                  );
                 },
                 onPressedRestoreButton: () async => await Future.delayed(const Duration(seconds: 3)),
                 onPressedPrivacyButton: () => Get.defaultDialog(title: "Privacy Policy", middleText: "Privacy Policy Link"),

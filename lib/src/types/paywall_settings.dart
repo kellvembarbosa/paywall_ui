@@ -3,7 +3,7 @@
 class PaywallSettings with Diagnosticable {
   final String localizedPrice, localizedSubscriptionPeriod;
   final Function? onPressedPurchaseButton, onPressedRestoreButton, onPressedTermsButton, onPressedPrivacyButton, onPressedBackButton;
-  final bool enabledBackButton, isSubscription; // disable back button on paywall page
+  final bool enabledBackButton, isSubscription, disableDefaultMessages, disableProtectedMsg; // disable back button on paywall page
 
   PaywallSettings({
     required this.localizedPrice,
@@ -15,5 +15,7 @@ class PaywallSettings with Diagnosticable {
     this.onPressedBackButton,
     this.enabledBackButton = true,
     this.isSubscription = false,
+    this.disableDefaultMessages = true,
+    this.disableProtectedMsg = true,
   });
 }

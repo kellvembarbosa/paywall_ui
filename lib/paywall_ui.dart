@@ -8,6 +8,7 @@ import 'package:paywall_ui/src/pages/one_time_payment/view.dart';
 import 'package:paywall_ui/src/types/paywall_offers.dart';
 import 'package:paywall_ui/src/types/paywall_settings.dart';
 
+import 'src/pages/one_payment/view.dart';
 import 'src/types/paywall_style.dart';
 
 // exports
@@ -25,8 +26,8 @@ class PaywallUi {
 
   Widget multipleOptions({
     required PaywallSettings paywallSettings,
-    required List<String> features,
     required List<PaywallButtonOffer> offers,
+    List<String>? features,
     Widget? mediaContainer,
     BoxDecoration? mainContainerDecoration,
     MultiplePaywallStyle? paywallStyle,
@@ -42,7 +43,7 @@ class PaywallUi {
       mediaContainer: mediaContainer,
       offers: offers,
       mainContainerDecoration: mainContainerDecoration,
-      features: features,
+      features: features ?? ['✅ Exclusive Features 🔥 ', '✅ Get All Features', "✅  Exclusive content"],
       paywallStyle: paywallStyle,
       currentOfferSelected: currentOfferSelected,
       optionsLayout: optionsLayout,
@@ -55,7 +56,7 @@ class PaywallUi {
 
   Widget oneTimePayment({
     required PaywallSettings paywallSettings,
-    required List<String> features,
+    List<String>? features,
     Widget? mediaContainer,
     BoxDecoration? mainContainerDecoration,
     OTPPaywallStyle? paywallStyle,
@@ -63,6 +64,26 @@ class PaywallUi {
     String textButtonCTA = "Buy now",
   }) {
     return OneTimePaymentPage(
+      paywallSettings: paywallSettings,
+      mediaContainer: mediaContainer,
+      mainContainerDecoration: mainContainerDecoration,
+      features: features ?? ['✅ Exclusive Features 🔥 ', '✅ Get All Features', "✅  Exclusive content"],
+      paywallStyle: paywallStyle,
+      mainTitle: mainTitle,
+      textButtonCTA: textButtonCTA,
+    );
+  }
+
+  Widget onePayment({
+    required PaywallSettings paywallSettings,
+    required List<String> features,
+    Widget? mediaContainer,
+    BoxDecoration? mainContainerDecoration,
+    OTPPaywallStyle? paywallStyle,
+    String mainTitle = "Unlock All Faces",
+    String textButtonCTA = "Continue",
+  }) {
+    return OnePaymentPage(
       paywallSettings: paywallSettings,
       mediaContainer: mediaContainer,
       mainContainerDecoration: mainContainerDecoration,

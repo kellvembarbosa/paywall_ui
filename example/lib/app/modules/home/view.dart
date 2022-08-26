@@ -9,7 +9,9 @@ class HomePage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Paywalls with GETX')),
+      appBar: AppBar(
+        title: const Text('Paywalls with GETX'),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -18,6 +20,13 @@ class HomePage extends GetView<HomeController> {
               Text(
                 'Demo paywalls',
                 style: Get.textTheme.titleLarge,
+              ),
+              SizedBox(
+                width: Get.width,
+                child: ElevatedButton(
+                  child: const Text('Show paywall ONE OPTION'),
+                  onPressed: () => Get.toNamed('/paywall', arguments: {'type': 'one'}),
+                ),
               ),
               SizedBox(
                 width: Get.width,
