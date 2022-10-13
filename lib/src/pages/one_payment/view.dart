@@ -38,6 +38,7 @@ class OnePaymentPage extends GetView {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: paywallStyle?.scaffoldBackground ?? Colors.black,
       body: Stack(
         children: [
           SafeArea(
@@ -174,7 +175,11 @@ class OnePaymentPage extends GetView {
                       const SizedBox(
                         height: 20,
                       ),
-                      SlideInLeft(
+                      Flash(
+                        delay: const Duration(seconds: 2),
+                        infinite: true,
+                        duration: const Duration(seconds: 5),
+                        //animate: true,
                         child: SizedBox(
                           width: double.maxFinite,
                           child: Padding(
@@ -199,26 +204,27 @@ class OnePaymentPage extends GetView {
                               //       size: 32,
                               //     ),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Spacer(),
-                                  Text(
-                                    textButtonCTA,
-                                    style: paywallStyle?.textStyleButtonCTA ??
-                                        GoogleFonts.roboto(
-                                          color: Colors.black,
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  const Spacer(),
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.arrow_forward,
-                                      color: Colors.black,
+                                  Flexible(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 14.0),
+                                      child: Text(
+                                        textButtonCTA,
+                                        style: paywallStyle?.textStyleButtonCTA ??
+                                            GoogleFonts.roboto(
+                                              color: Colors.black,
+                                              fontSize: 22,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
+                                  ),
+                                  const Icon(
+                                    Icons.arrow_forward,
+                                    color: Colors.black,
                                   )
                                 ],
                               ),

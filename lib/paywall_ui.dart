@@ -76,7 +76,7 @@ class PaywallUi {
 
   Widget onePayment({
     required PaywallSettings paywallSettings,
-    required List<String> features,
+    required List<String>? features,
     Widget? mediaContainer,
     BoxDecoration? mainContainerDecoration,
     OTPPaywallStyle? paywallStyle,
@@ -87,7 +87,7 @@ class PaywallUi {
       paywallSettings: paywallSettings,
       mediaContainer: mediaContainer,
       mainContainerDecoration: mainContainerDecoration,
-      features: features,
+      features: features ?? ["Daily Gallery Updates", "Live, Static, Dynamic Collections", "No Ads", "No Subscriptions"],
       paywallStyle: paywallStyle,
       mainTitle: mainTitle,
       textButtonCTA: textButtonCTA,
@@ -95,9 +95,6 @@ class PaywallUi {
   }
 
   Widget defaultWrapper({required Widget child, Brightness? brightness}) {
-    return MaterialApp(
-      locale: Get.locale,
-      home: child,
-    );
+    return child;
   }
 }
