@@ -263,7 +263,23 @@ class OnePaymentPage extends GetView {
                         ],
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 12,
+                      ),
+                      InkWell(
+                        onTap: () => paywallController.baseFunction(paywallSettings.onPressedRestoreButton),
+                        child: Text(
+                          "Restore".tr,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 12,
                       ),
                       Opacity(
                         opacity: 0.5,
@@ -281,20 +297,6 @@ class OnePaymentPage extends GetView {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.grey[500]!,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                            const Spacer(),
-                            InkWell(
-                              onTap: () => paywallController.baseFunction(paywallSettings.onPressedRestoreButton),
-                              child: Text(
-                                "Restore".tr,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  color: Colors.grey,
                                   fontSize: 12,
                                 ),
                               ),

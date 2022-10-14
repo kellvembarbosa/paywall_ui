@@ -87,7 +87,7 @@ class PaywallUi {
       paywallSettings: paywallSettings,
       mediaContainer: mediaContainer,
       mainContainerDecoration: mainContainerDecoration,
-      features: features ?? ["Daily Gallery Updates", "Live, Static, Dynamic Collections", "No Ads", "No Subscriptions"],
+      features: features ?? ["Daily Gallery Updates".tr, "Live, Static, Dynamic Collections".tr, "No Ads".tr, "No Subscriptions".tr],
       paywallStyle: paywallStyle,
       mainTitle: mainTitle,
       textButtonCTA: textButtonCTA,
