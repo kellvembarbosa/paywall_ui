@@ -8,7 +8,7 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  animate_do: ^2.1.0
+  animate_do: ^3.0.2
   flutter:
     sdk: flutter
   get: ^4.6.5
