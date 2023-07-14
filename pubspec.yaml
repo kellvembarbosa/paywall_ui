@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   get: ^4.6.5
-  google_fonts: ^5.1.1
+  google_fonts: ^5.1.0
   iconsax: ^0.0.8
 
 dev_dependencies:
